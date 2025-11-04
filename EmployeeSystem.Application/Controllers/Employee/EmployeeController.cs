@@ -328,6 +328,17 @@ namespace EmployeeSystem.Application.Controllers.Employee
                 Message = StaticVariables.SaveUpdatedRecord
             });
         }
+        [HttpDelete]
+        [Route("delete/id")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            return Ok(new ApiResponseModel
+            {
+                Status = true,
+                Data = await _EmployeeRepository.Delete(id),
+                Message = StaticVariables.SaveUpdatedRecord
+            });
+        }
         //EMPLOYMENT_TYPE
         [HttpGet("get-employees-by-designation")]
         public async Task<IActionResult> GetEmployeesByDesignation(string DesignationCode)
