@@ -39,7 +39,13 @@ namespace EmployeeSystem.Infra.Repositories.Onboarding
             var rec = await _dbContext.Onboardings.FirstOrDefaultAsync(x => x.OnboardingId == obj.OnboardingId);
             if (rec != null)
             {
-                var MapeTheParentObject = this._mapper.Map(obj, rec);
+               //var MapeTheParentObject = this._mapper.Map(obj, rec);
+                rec.ContactPersonInfo = obj.ContactPersonInfo;
+                rec.OnboardingStartDate = obj.OnboardingStartDate;
+                rec.ContractDate = obj.ContractDate;
+                
+                
+ rec.CompanyName = obj.CompanyName;
                 rec.UpdatedDate = DateTime.Now;
 
                 rec.UpdatedBy = obj.CreatedBy;
