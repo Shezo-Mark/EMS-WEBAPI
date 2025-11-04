@@ -29,9 +29,20 @@ namespace EmployeeSystem.Infra.Repositories.JobDescription
             var rec = await _dbContext.JobDescriptions.FirstOrDefaultAsync(x => x.JobDescriptionId == obj.JobDescriptionId);
             if (rec != null)
             {
-                var MapeTheParentObject = this._mapper.Map(obj, rec);
+                //var MapeTheParentObject = this._mapper.Map(obj, rec);
                 rec.UpdatedDate = DateTime.Now;
-
+rec.JobDescriptionId = obj.JobDescriptionId;
+                rec.HiringManagerId = obj.HiringManagerId;
+                
+                rec.GroupId = obj.GroupId;
+                rec.JobOpeningDate = DateTime.Now;
+                rec.DepartmentId = obj.DepartmentId;    
+                rec.OnboardingId = obj.OnboardingId;
+                rec.PostHostId = obj.PostHostId;
+                rec.Title = obj.Title;
+                rec.EmploymentTypeId = obj.EmploymentTypeId;
+                rec.JobDescriptionId= obj.JobDescriptionId;
+                
                 rec.UpdatedBy = obj.CreatedBy;
             }
             else
