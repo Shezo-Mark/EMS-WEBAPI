@@ -24,20 +24,38 @@ namespace EmployeeSystem.Infra.Repositories.Document
         }
         public async Task<ApiResponseModel> EmployeeDocumentUpload(DocumentInfoDto document)
         {
-            if (document.Base64Url != null)
-            {
-                string Base64 = "";
-                int index = (document.Base64Url.IndexOf(","));
-                if (index > 0)
-                    Base64 = document.Base64Url.Substring(index + 1);
-                document.DocumentGuid = CommonMethod.AddFile(Base64, document.DocumentPath);
+            var existing = _dbContext.Documents.Where(m => m.LovId == document.LovId && m.TableRefrenceId==document.TableRefrenceId).FirstOrDefault();
+            if (existing!=null) {
+                if (document.Base64Url != null)
+                {
+                    string Base64 = "";
+                    int index = (document.Base64Url.IndexOf(","));
+                    if (index > 0)
+                        Base64 = document.Base64Url.Substring(index + 1);
+                    document.DocumentGuid = CommonMethod.AddFile(Base64, document.DocumentPath);  
+                }
+                existing.DocumentGuid = document.DocumentGuid;
+                var documentMapped = this._mapper.Map(existing, document);
+                await _dbContext.SaveChangesAsync();
             }
+            else
+            {
+                if (document.Base64Url != null)
+                {
+                    string Base64 = "";
+                    int index = (document.Base64Url.IndexOf(","));
+                    if (index > 0)
+                        Base64 = document.Base64Url.Substring(index + 1);
+                    document.DocumentGuid = CommonMethod.AddFile(Base64, document.DocumentPath);
+                }
                 var documentMapped = this._mapper.Map<DocumentInfoDto, Domain.Models.Document>(document);
-            documentMapped.CreatedDate = DateTime.Now;
+                documentMapped.CreatedDate = DateTime.Now;
                 await _dbContext.Documents.AddAsync(documentMapped);
+                await _dbContext.SaveChangesAsync();
+            }
+           
             
             
-            await _dbContext.SaveChangesAsync();
             return new ApiResponseModel
             {
                 Status = true,

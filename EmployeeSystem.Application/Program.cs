@@ -1,4 +1,4 @@
-using EmployeeSystem.Application.Contracts.AppSettings;
+﻿using EmployeeSystem.Application.Contracts.AppSettings;
 using EmployeeSystem.Application.Contracts.MapperConfiguration;
 using EmployeeSystem.EntityFrameworkCore.DBContext;
 using EmployeeSystem.Extentions;
@@ -179,16 +179,16 @@ app.UseSwaggerUI();
 
 //});
 
-//app.UseFileServer(new FileServerOptions
-//{
-//    FileProvider = new PhysicalFileProvider(
-//           Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
-//    RequestPath = "/wwwroot",
-//    EnableDirectoryBrowsing = true
-//});
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
+    RequestPath = "/wwwroot",
+    EnableDirectoryBrowsing = true
+});
 
 //app.UseHttpsRedirection();
-
+//app.UseStaticFiles();     // 👈 This enables serving from wwwroot
 app.UseAuthentication();
 
 //app.MapControllers();
