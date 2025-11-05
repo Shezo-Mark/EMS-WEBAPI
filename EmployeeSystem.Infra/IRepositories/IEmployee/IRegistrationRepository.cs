@@ -13,7 +13,8 @@ namespace EmployeeSystem.Infra.IRepositories.IEmployee
         Task<IEnumerable<EmployeePreviousExperience>> GetExperienceById(Guid employeeId);
         Task<string> GetEmployeeCode();
         Task<IEnumerable<Employee>> GetEmployees();
-        Task<bool> Delete(Guid Id);
+        Task<bool> Delete(Guid employeeId);
+        Task<Employee> GetById(Guid id);
         Task<Employee> GetEmployeeById(Guid employeeId);
         Task<EmployeeEducation> GetEducationByEducationId(Guid educationId);
         Task<EmployeePreviousExperience> GetExperienceByExperienceId(Guid PreviousExperienceId);
