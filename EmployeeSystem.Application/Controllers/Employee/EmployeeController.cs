@@ -330,7 +330,7 @@ namespace EmployeeSystem.Application.Controllers.Employee
         }
         [HttpDelete]
         [Route("delete/{id}")]
-        public async Task<IActionResult> Delete(Guid employeeId)
+        public async Task<IActionResult> Delete(Guid id)
         {
             return Ok(new ApiResponseModel
             {
