@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.SignalR;
 using EmployeeSystem.Infra.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using EmployeeSystem.EntityFrameworkCore.Migrations;
+using iText.Commons.Actions.Contexts;
 
 namespace EmployeeSystem.Infra.Repositories.Employee
 {
@@ -233,6 +234,25 @@ namespace EmployeeSystem.Infra.Repositories.Employee
                 return true;
             }
             return false;
+        }
+
+        public async Task<Domain.Models.Employee> GetById(Guid id)
+        {
+            return await _dbContext.Employees
+                .FirstOrDefaultAsync(e => e.EmployeeId == id);
+        }
+
+        public async Task<bool> Deleteby(Guid id)
+        {
+            var employee = await _dbContext.Employees.FindAsync(id);
+
+            if (employee == null)
+                return false;
+
+            _dbContext.Employees.Remove(employee);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<Guid> AddUpdateFamily(EmployeeFamilyDto employee)

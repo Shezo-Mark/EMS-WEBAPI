@@ -72,7 +72,31 @@ namespace EmployeeSystem.Application.Controllers.Employee
                 Message = StaticVariables.SaveUpdatedRecord
             });
         }
+        [HttpGet]
+        [Route("get/{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _EmployeeRepository.GetById(id);
+
+            if (result == null)
+            {
+                return NotFound(new ApiResponseModel
+                {
+                    Status = false,
+                    Message = "Record not found"
+                });
+            }
+
+            return Ok(new ApiResponseModel
+            {
+                Status = true,
+                Data = result,
+                Message = "Data deleted successfully"
+            });
+        }
+
         [HttpPost, Route("update-education")]
+
         public async Task<IActionResult> AddUpdateEducation(EmployeeEducationDto obj)
         {
             obj.CreatedBy = Guid.Parse(User?.Identity?.Name);
@@ -335,7 +359,7 @@ namespace EmployeeSystem.Application.Controllers.Employee
             return Ok(new ApiResponseModel
             {
                 Status = true,
-                Data = await _EmployeeRepository.Delete(employeeId),
+                Data = await _EmployeeRepository.Delete(id),
                 Message = StaticVariables.SaveUpdatedRecord
             });
         }
