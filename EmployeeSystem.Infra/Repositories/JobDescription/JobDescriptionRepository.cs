@@ -136,7 +136,7 @@ rec.JobDescriptionId = obj.JobDescriptionId;
             {
                 var MapeTheParentObject = this._mapper.Map(obj, rec);
                 rec.UpdatedDate = DateTime.Now;
-
+                rec.OnboardingId = obj.OnboardingId;
                 rec.UpdatedBy = obj.CreatedBy;
             }
             else
