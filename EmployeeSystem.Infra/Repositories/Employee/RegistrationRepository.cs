@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.SignalR;
 using EmployeeSystem.Infra.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
+using EmployeeSystem.EntityFrameworkCore.Migrations;
 
 namespace EmployeeSystem.Infra.Repositories.Employee
 {
@@ -220,15 +221,15 @@ namespace EmployeeSystem.Infra.Repositories.Employee
             bool Isuploaded = documentCountCheck.Any(x => x.DocumentStatus == true);
             return !Isuploaded;
         }
-        public async Task<bool> Delete(Guid id)
+        public async Task<bool> Delete(Guid employeeId)
         {
-            IQueryable<EmployeeSystem.Domain.Models.Employee> DbQuery = _dbContext.Employees.Where(x => x.EmployeeId == id);
+            IQueryable<EmployeeSystem.Domain.Models.Employee> DbQuery = _dbContext.Employees.Where(x => x.EmployeeId == employeeId);
             Domain.Models.Employee results = await DbQuery.FirstOrDefaultAsync();
             if (results is not null)
             {
                 results.IsDeleted = results.IsDeleted == true ? false : true;
                 await _dbContext.SaveChangesAsync();
-                _logger.LogInformation("delete employee {@id} ", id);
+                _logger.LogInformation("delete employee {@id} ", employeeId);
                 return true;
             }
             return false;

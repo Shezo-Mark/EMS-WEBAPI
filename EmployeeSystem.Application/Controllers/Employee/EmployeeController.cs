@@ -329,13 +329,13 @@ namespace EmployeeSystem.Application.Controllers.Employee
             });
         }
         [HttpDelete]
-        [Route("delete/id")]
-        public async Task<IActionResult> Delete(Guid id)
+        [Route("delete/{id}")]
+        public async Task<IActionResult> Delete(Guid employeeId)
         {
             return Ok(new ApiResponseModel
             {
                 Status = true,
-                Data = await _EmployeeRepository.Delete(id),
+                Data = await _EmployeeRepository.Delete(employeeId),
                 Message = StaticVariables.SaveUpdatedRecord
             });
         }
