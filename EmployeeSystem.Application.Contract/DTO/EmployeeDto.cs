@@ -37,10 +37,12 @@ namespace EmployeeSystem.Application.Contracts.DTO
         public Guid? EmploymentTypeId { get; set; }
         public string? Picture { get; set; }
         public string? Base64 { get; set; }
-        public string? StreetAddress { get; set; }
-        public string? Mohallah { get; set; }
-        public string? City { get; set; }
-        public string? State { get; set; }
+        public string? CurrentStreetAddress { get; set; }
+        public string? CurrentMohallah { get; set; }
+        public string? CurrentCity { get; set; }
+        public string? CurrentTehsil { get; set; }
+        public string? CurrentDistrict { get; set; }
+        public string? CurrentState { get; set; }
         public string? PermanentStreetAddress { get; set; }
         public string? PermanentMohallah { get; set; }
         public string? PermanentCity { get; set; }

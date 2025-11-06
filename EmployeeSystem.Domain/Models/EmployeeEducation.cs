@@ -20,5 +20,6 @@ namespace EmployeeSystem.Domain.Models
         public string? PassingYear { get; set; }
        
         public Guid EmployeeId { get; set; }
+        public Guid? EducationTypeId { get; set; }
     }   
 }
