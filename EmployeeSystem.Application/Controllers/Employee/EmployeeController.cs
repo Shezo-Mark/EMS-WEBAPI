@@ -285,7 +285,8 @@ namespace EmployeeSystem.Application.Controllers.Employee
                 Message = StaticVariables.SaveUpdatedRecord
             });
         }
-        [HttpPost, Route("update-family")]
+        [HttpPost]
+        [Route("update-family")]
         public async Task<IActionResult> AddUpdateFamily(EmployeeFamilyDto obj)
         {
             obj.CreatedBy = Guid.Parse(User?.Identity?.Name);
