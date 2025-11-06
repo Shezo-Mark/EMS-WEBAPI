@@ -54,13 +54,17 @@ public partial class Employee: BaseModel
     [StringLength(100)]
     public string? Picture { get; set; }
     [StringLength(500)]
-    public string? StreetAddress { get; set; }
+    public string? CurrentStreetAddress { get; set; }
     [StringLength(200)]
-    public string? Mohallah { get; set; }
+    public string? CurrentMohallah { get; set; }
     [StringLength(100)]
-    public string? City { get; set; }
+    public string? CurrentCity { get; set; }
     [StringLength(50)]
-    public string? State { get; set; }
+    public string? CurrentTehsil { get; set; }
+    [StringLength(50)]
+    public string? CurrentDistrict { get; set; }
+    [StringLength(50)]
+    public string? CurrentState { get; set; }
     public string? PermanentStreetAddress { get; set; }
     [StringLength(200)]
     public string? PermanentMohallah { get; set; }
