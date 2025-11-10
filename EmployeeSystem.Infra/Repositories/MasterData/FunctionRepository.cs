@@ -40,6 +40,29 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
             await _dbContext.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> SoftDeleteAsync(Guid id)
+        {
+            var function = await _dbContext.Functions.FindAsync(id);
+            if (function == null) return false;
+
+            function.IsActive = false;
+            //department.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ActivateAsync(Guid id)
+        {
+            var function = await _dbContext.Functions.FindAsync(id);
+            if (function == null) return false;
+
+            function.IsActive = true;
+            // department.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
         public async Task<bool> Delete(Guid id)
         {
             var rec = await _dbContext.Functions.FirstOrDefaultAsync(x => x.FunctionId == id);
@@ -67,7 +90,7 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
         }
         public async Task<IEnumerable<Functions>> GetFunctionsByGroupId(Guid GroupId)
         {
-            var rec = await _dbContext.Functions.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.GroupId == GroupId).OrderBy(x => x.CreatedDate).ToListAsync();
+            var rec = await _dbContext.Functions.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.GroupId == GroupId && x.IsActive == true).OrderBy(x => x.CreatedDate).ToListAsync();
             return rec;
         }
         public async Task<ApiResponseModel> GetAllFunctions(int pageNo, int pageSize, string searchText)

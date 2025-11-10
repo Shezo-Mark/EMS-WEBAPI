@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MailKit.Search;
 using EmployeeSystem.Infra.Repositories.MasterData;
+using OfficeOpenXml.FormulaParsing.Excel.Functions;
 
 namespace EmployeeSystem.Application.Controllers.MasterData
 {
@@ -40,6 +41,30 @@ namespace EmployeeSystem.Application.Controllers.MasterData
                 Status = true,
                 Data = await _levelRepository.GetAllLevels(),
                 Message = StaticVariables.SaveUpdatedRecord
+            });
+        }
+        [HttpPost]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> SoftDelete(Guid id)
+        {
+            var result = await _levelRepository.SoftDeleteAsync(id);
+            return Ok(new ApiResponseModel
+            {
+                Status = result,
+                Message = result ? "Level Deactivated" : "Level Not Found"
+            });
+        }
+
+        // ✅ Activate (Check)
+        [HttpPost]
+        [Route("Activate/{id}")]
+        public async Task<IActionResult> Activate(Guid id)
+        {
+            var result = await _levelRepository.ActivateAsync(id);
+            return Ok(new ApiResponseModel
+            {
+                Status = result,
+                Message = result ? "Level Activated" : "Level Not Found"
             });
         }
         [HttpGet]

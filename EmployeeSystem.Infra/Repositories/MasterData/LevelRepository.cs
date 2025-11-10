@@ -38,7 +38,29 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
             await _dbContext.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> SoftDeleteAsync(Guid id)
+        {
+            var level = await _dbContext.Levels.FindAsync(id);
+            if (level == null) return false;
 
+            level.IsActive = false;
+            //level.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ActivateAsync(Guid id)
+        {
+            var level = await _dbContext.Levels.FindAsync(id);
+            if (level == null) return false;
+
+            level.IsActive = true;
+            // level.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
         public async Task<bool> Delete(Guid id)
         {
             var rec = await _dbContext.Levels.FirstOrDefaultAsync(x => x.LevelId == id);
@@ -93,7 +115,7 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
         {
             if (GroupCode!=null && GroupCode!="" && GroupCode!="null")
             {
-                var rec = await _dbContext.Levels.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.Group == GroupCode).OrderBy(x => x.CreatedDate).ToListAsync();
+                var rec = await _dbContext.Levels.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.Group == GroupCode && x.IsActive == true).OrderBy(x => x.CreatedDate).ToListAsync();
                 return rec;
             }
             else

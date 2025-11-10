@@ -4,6 +4,7 @@ using EmployeeSystem.Domain.Models;
 using EmployeeSystem.Infra.IRepositories.IMasterData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using EmployeeSystem.Infra.Repositories.MasterData;
 
 namespace EmployeeSystem.Application.Controllers.MasterData
 {
@@ -29,6 +30,30 @@ namespace EmployeeSystem.Application.Controllers.MasterData
                 Message = StaticVariables.SaveUpdatedRecord
             });
 
+        }
+        [HttpPost]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> SoftDelete(Guid id)
+        {
+            var result = await _groupRepository.SoftDeleteAsync(id);
+            return Ok(new ApiResponseModel
+            {
+                Status = result,
+                Message = result ? "Group Deactivated" : "Group Not Found"
+            });
+        }
+
+        // ✅ Activate (Check)
+        [HttpPost]
+        [Route("Activate/{id}")]
+        public async Task<IActionResult> Activate(Guid id)
+        {
+            var result = await _groupRepository.ActivateAsync(id);
+            return Ok(new ApiResponseModel
+            {
+                Status = result,
+                Message = result ? "Group Activated" : "Group Not Found"
+            });
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
