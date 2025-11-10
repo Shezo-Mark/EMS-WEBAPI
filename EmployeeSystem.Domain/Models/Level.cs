@@ -11,6 +11,7 @@ namespace EmployeeSystem.Domain.Models
     {
         [Key]
         public Guid LevelId { get; set; }
+        public Guid GroupId { get; set; }
 
         [Required, StringLength(30)]
         public string LevelName { get; set; }
