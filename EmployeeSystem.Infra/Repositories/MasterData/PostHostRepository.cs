@@ -36,6 +36,29 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
             await _dbContext.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> SoftDeleteAsync(Guid id)
+        {
+            var PostHost = await _dbContext.PostHosts.FindAsync(id);
+            if (PostHost == null) return false;
+
+            PostHost.IsActive = false;
+            //PostHost.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ActivateAsync(Guid id)
+        {
+            var PostHost = await _dbContext.PostHosts.FindAsync(id);
+            if (PostHost == null) return false;
+
+            PostHost.IsActive = true;
+            // PostHost.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
         public async Task<bool> Delete(Guid id)
         {
             var rec = await _dbContext.PostHosts.FirstOrDefaultAsync(x => x.PostHostId == id);
@@ -58,7 +81,7 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
         }
         public async Task<IEnumerable<PostHost>> GetAllPostHosts()
         {
-            var rec = await _dbContext.PostHosts.IgnoreQueryFilters().Where(x => x.IsDeleted != true).OrderBy(x => x.CreatedDate).ToListAsync();
+            var rec = await _dbContext.PostHosts.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.IsActive == true).OrderBy(x => x.CreatedDate).ToListAsync();
             return rec;
         }
 
