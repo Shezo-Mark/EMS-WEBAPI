@@ -10,7 +10,7 @@ namespace EmployeeSystem.Application.Contracts.DTO
     public class DocumentInfoDto
     {
         public Guid DocumentId { get; set; }
-        public Guid? LovId { get; set; }
+        public Guid LovId { get; set; }
         public string? Table { get; set; }
         public Guid TableRefrenceId { get; set; }
         public Guid CreatedBy { get; set; }

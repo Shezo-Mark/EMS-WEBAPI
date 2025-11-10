@@ -8,6 +8,7 @@ using Dapper;
 using EmployeeSystem.Application.Contracts.DTO;
 using EmployeeSystem.Application.Contracts.ResponseModel;
 using EmployeeSystem.Domain.Common.Enumerations;
+using iText.Commons.Actions.Contexts;
 
 namespace EmployeeSystem.Infra.Repositories.MasterData
 {
@@ -40,6 +41,29 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
             await _dbContext.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> SoftDeleteAsync(Guid id)
+        {
+            var department = await _dbContext.Departments.FindAsync(id);
+            if (department == null) return false;
+
+            department.IsActive = false;
+            //department.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ActivateAsync(Guid id)
+        {
+            var department = await _dbContext.Departments.FindAsync(id);
+            if (department == null) return false;
+
+            department.IsActive = true;
+           // department.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
         public async Task<bool> Delete(Guid id)
         {
             var rec = await _dbContext.Departments.FirstOrDefaultAsync(x => x.DepartmentId == id);
@@ -67,7 +91,7 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
         }
         public async Task<IEnumerable<Department>> GetDepartmentsByGroupId(Guid GroupId)
         {
-            var rec = await _dbContext.Departments.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.GroupId==GroupId).OrderBy(x => x.CreatedDate).ToListAsync();
+            var rec = await _dbContext.Departments.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.GroupId==GroupId&&x.IsActive==true).OrderBy(x => x.CreatedDate).ToListAsync();
             return rec;
         }
         public async Task<ApiResponseModel> GetAllDepartments(int pageNo, int pageSize, string searchText)

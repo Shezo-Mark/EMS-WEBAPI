@@ -30,6 +30,30 @@ namespace EmployeeSystem.Application.Controllers.MasterData
             });
 
         }
+        [HttpPost]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> SoftDelete(Guid id)
+        {
+            var result = await _departmentRepository.SoftDeleteAsync(id);
+            return Ok(new ApiResponseModel
+            {
+                Status = result,
+                Message = result ? "Department Deactivated" : "Department Not Found"
+            });
+        }
+
+        // ✅ Activate (Check)
+        [HttpPost]
+        [Route("Activate/{id}")]
+        public async Task<IActionResult> Activate(Guid id)
+        {
+            var result = await _departmentRepository.ActivateAsync(id);
+            return Ok(new ApiResponseModel
+            {
+                Status = result,
+                Message = result ? "Department Activated" : "Department Not Found"
+            });
+        }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
