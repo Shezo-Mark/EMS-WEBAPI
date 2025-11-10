@@ -37,6 +37,29 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
             await _dbContext.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> SoftDeleteAsync(Guid id)
+        {
+            var group = await _dbContext.Groups.FindAsync(id);
+            if (group == null) return false;
+
+            group.IsActive = false;
+            //level.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ActivateAsync(Guid id)
+        {
+            var group = await _dbContext.Groups.FindAsync(id);
+            if (group == null) return false;
+
+            group.IsActive = true;
+            // level.UpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<bool> Delete(Guid id)
         {
@@ -62,13 +85,13 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
         {
             List<DropdownListDto> list = await (from groups in _dbContext.Groups
 
-                                                                        where groups.IsDeleted != true
-                                                                        select new DropdownListDto
-                                                                        {
-                                                                            Id = groups.GroupId,
-                                                                            Name = groups.GroupName,
-Code=groups.GroupCode
-                                                                        }).ToListAsync();
+                                                where groups.IsDeleted != true && groups.IsActive == true
+                                                select new DropdownListDto
+                                                {
+                                                    Id = groups.GroupId,
+                                                    Name = groups.GroupName,
+                                                    Code = groups.GroupCode
+                                                }).ToListAsync();
             return list;
         }
 

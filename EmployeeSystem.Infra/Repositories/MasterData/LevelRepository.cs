@@ -115,7 +115,7 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
         {
             if (GroupCode!=null && GroupCode!="" && GroupCode!="null")
             {
-                var rec = await _dbContext.Levels.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.Group == GroupCode).OrderBy(x => x.CreatedDate).ToListAsync();
+                var rec = await _dbContext.Levels.IgnoreQueryFilters().Where(x => x.IsDeleted != true && x.Group == GroupCode && x.IsActive == true).OrderBy(x => x.CreatedDate).ToListAsync();
                 return rec;
             }
             else
