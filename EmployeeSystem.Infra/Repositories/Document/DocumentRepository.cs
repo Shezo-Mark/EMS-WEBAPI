@@ -24,7 +24,7 @@ namespace EmployeeSystem.Infra.Repositories.Document
         }
         public async Task<ApiResponseModel> EmployeeDocumentUpload(DocumentInfoDto document)
         {
-            var existing = _dbContext.Documents.Where(m => m.LovId == document.LovId && m.TableRefrenceId==document.TableRefrenceId).FirstOrDefault();
+            var existing = _dbContext.Documents.Where(m => m.LovId == document.LovId && m.TableRefrenceId==document.TableRefrenceId && m.IsDeleted!=true).FirstOrDefault();
             if (existing!=null) {
                 if (document.Base64Url != null)
                 {
