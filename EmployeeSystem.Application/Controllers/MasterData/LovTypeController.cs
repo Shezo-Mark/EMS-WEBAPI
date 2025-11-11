@@ -29,16 +29,5 @@ namespace EmployeeSystem.Application.Controllers.MasterData
 
             return Ok(response);
         }
-        [HttpGet]
-        [Route("get-studdent-attachment-By-lovcode")]
-        public async Task<IActionResult> GetStuddentLovByLovCode(string lovCode)
-        {
-            return Ok(new ApiResponseModel
-            {
-                Status = true,
-                Data = await _LovTypeRepository.GetStuddentLovByLovCode(lovCode),
-                Message = StaticVariables.RecordFounded
-            });
-        }
     }
 }

@@ -23,7 +23,6 @@ public partial class EmployeeDBContext : DbContext
     public virtual DbSet<LOV> LOVS { get; set; }
     public virtual DbSet<LOVType> LOVType { get; set; }
     public virtual DbSet<Domain.Models.Document> Documents { get; set; }
-    public virtual DbSet<Template> Templates { get; set; }
     public virtual DbSet<UserToken> UserTokens { get; set; }
     public virtual DbSet<ReportConfig> ReportConfigs { get; set; }
     public virtual DbSet<ReportConfigDetail> ReportConfigDetails { get; set; }

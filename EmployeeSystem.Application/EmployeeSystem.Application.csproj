@@ -50,12 +50,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Contracts\English_parent_contract_Mapped.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Uploads\CVs\" />
     <Folder Include="wwwroot\profilePictures\" />

@@ -43,9 +43,6 @@ namespace EmployeeSystem.Infra.Repositories.UserManagement
             }
             var role = await _iRoleRepository.GetById(user.RoleId);
             var jobPermission = await _iJobPermissionRepository.GetJobPermissionByRoleId(user.RoleId);
-            LoginStudent student = null;
-            LoginParent parent = null;
-            LoginTeacher teacher = null;
             
             //if (role.KeyCode == nameof(RoleKeyCode.STUDENT))
             //{
@@ -78,9 +75,6 @@ namespace EmployeeSystem.Infra.Repositories.UserManagement
                         jobPermission.IsJobApprover,
                         jobPermission.IsJobPublisher
                     },
-                    student,
-                    teacher,
-                    parent,
                     permissions = await _rolePermissionRepository.GetPermissionByRoleIdForLogin(user.RoleId)
                 }
             };

@@ -75,9 +75,5 @@ namespace EmployeeSystem.Infra.Repositories.MasterData
             return lovData;
 
         }
-        public async Task<IEnumerable<StudentAttachmentDto>> GetStuddentLovByLovCode(string lovCode)
-        {
-            return await _dapper.QueryAsync<StudentAttachmentDto>("GetStudentAttachmentLov", new { @LovTypeCode = lovCode }, CommandType.StoredProcedure).ConfigureAwait(true);
-        }
     }
 }

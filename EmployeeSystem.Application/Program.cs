@@ -3,7 +3,6 @@ using EmployeeSystem.Application.Contracts.MapperConfiguration;
 using EmployeeSystem.EntityFrameworkCore.DBContext;
 using EmployeeSystem.Extentions;
 using EmployeeSystem.Infra;
-using EmployeeSystem.Infra.MySql;
 using EmployeeSystem.Infra.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
@@ -29,13 +28,6 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = RedisConnection;
     options.InstanceName = RedisKey;
 });
-
-//builder.Services.AddTransient<MySqlConnection>(_ =>
-//    new MySqlConnection(MySqlConnection));
-
-builder.Services.AddSingleton<IMysql>(x =>
-    ActivatorUtilities.CreateInstance<MySql>(x, MySqlConnection)
-);
 //Serilog 
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -130,7 +122,6 @@ builder.Services.AddAutoMapper(typeof(Mapping));
 //    }).AddEntityFramework();
 //}
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-builder.Services.Configure<FirebaseSettings>(builder.Configuration.GetSection("Firebase"));
 
 
 
